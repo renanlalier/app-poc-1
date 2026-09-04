@@ -1,9 +1,5 @@
 name: agent-dev
 
-# Caller do repo de produto. E ISSO que cada time precisa aceitar no repo dele.
-# Toda a logica vive na platform; aqui so ha o gatilho, os inputs e as permissoes.
-# Remover este arquivo desliga a pipe neste repo, sem deixar acesso pendurado.
-
 on:
   repository_dispatch:
     types: [agent-dev]
@@ -18,7 +14,6 @@ on:
         required: true
         default: "1"
 
-# O caller precisa conceder o que o reusable pede - ele nunca escala sozinho.
 permissions:
   contents: write
   pull-requests: write
@@ -32,7 +27,7 @@ jobs:
       pull-requests: write
       issues: write
     with:
-      role: frontend-swe
+      role: frontend-engineer
       execution_id: ${{ github.event.client_payload.execution_id || inputs.execution_id }}
       sub_issue: ${{ fromJSON(github.event.client_payload.sub_issue || inputs.sub_issue) }}
       contract_ref: ${{ github.event.client_payload.contract_ref || 'v1' }}
