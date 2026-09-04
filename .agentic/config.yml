@@ -2,7 +2,7 @@ version: 1
 repo_role: product
 
 defaults:
-  cli: dry-run          # troque para cursor quando tiver CURSOR_API_KEY
+  cli: dry-run          # switch to cursor when you have CURSOR_API_KEY
   models:
     frontend-engineer: dry-run
     qa: dry-run
@@ -18,8 +18,8 @@ stack:
 
 constraints:
   forbid_paths:
-    - .github/workflows/**    # o agente nao modifica a propria pipe
-    - .agentic/**              # nem a propria configuracao
+    - .github/workflows/**    # the agent does not modify the pipeline itself
+    - .agentic/**              # nor its own configuration
   forbid_dependencies_add: true
 
 gates:
