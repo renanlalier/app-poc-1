@@ -1,0 +1,30 @@
+name: agent-dev
+
+# Caller do repo de produto. E ISSO que cada time precisa aceitar no repo dele.
+# Toda a logica vive na platform; aqui so ha o gatilho e os inputs.
+# Remover este arquivo desliga a pipe neste repo, sem deixar acesso pendurado.
+
+on:
+  repository_dispatch:
+    types: [agent-dev]
+  workflow_dispatch:
+    inputs:
+      execution_id:
+        description: "Id da execucao"
+        required: true
+        default: "manual-test"
+      sub_issue:
+        description: "Numero da sub-issue"
+        required: true
+        default: "1"
+
+jobs:
+  dev:
+    uses: renanlalier/poc-agentic-platform/.github/workflows/agent-dev.yml@v1
+    with:
+      role: frontend-swe
+      execution_id: ${{ github.event.client_payload.execution_id || inputs.execution_id }}
+      sub_issue: ${{ fromJSON(github.event.client_payload.sub_issue || inputs.sub_issue) }}
+      contract_ref: ${{ github.event.client_payload.contract_ref || 'v1' }}
+      cli_override: ${{ github.event.client_payload.cli_override || '' }}
+      model_override: ${{ github.event.client_payload.model_override || '' }}
