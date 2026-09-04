@@ -1,32 +1,30 @@
 version: 1
 repo_role: product
 
-# Nivel 2. Note que este repo usa cursor e o app-poc-2 usa codex:
-# rodar papeis equivalentes em CLIs diferentes, com o mesmo execution_id,
-# e o que transforma "qual CLI usar" de opiniao em medicao.
-
 defaults:
   cli: dry-run          # troque para cursor quando tiver CURSOR_API_KEY
   models:
-    frontend-swe: dry-run
+    frontend-engineer: dry-run
     qa: dry-run
 
-roles_enabled: [frontend-swe, qa]
+roles_enabled: [frontend-engineer, qa]
 
 stack:
   runtime: node@22
-  language: typescript
-  test: [jest]
+  language: javascript
+  framework: react
+  bundler: vite
+  test: [vitest, testing-library]
 
 constraints:
   forbid_paths:
     - .github/workflows/**    # o agente nao modifica a propria pipe
-    - .agentic/**             # nem a propria configuracao
+    - .agentic/**              # nem a propria configuracao
   forbid_dependencies_add: true
 
 gates:
   - build
-  - test:unit
+  - test
 
 pr:
   base_branch: main
