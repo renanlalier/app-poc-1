@@ -19,8 +19,15 @@ stack:
 constraints:
   forbid_paths:
     - .github/workflows/**    # the agent does not modify the pipeline itself
-    - .agentic/**              # nor its own configuration
+    - .agentic/config.yml     # nor its own configuration
+    - .agentic/skills/**      # nor repo-specific skills
+    # .agentic/memory/** is intentionally writable by agents
   forbid_dependencies_add: true
+
+memory:
+  enabled: true
+  consolidate_after_execution: true
+  max_episodes: 20
 
 gates:
   - build
