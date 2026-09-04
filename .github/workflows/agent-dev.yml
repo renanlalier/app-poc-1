@@ -1,7 +1,7 @@
 name: agent-dev
 
 # Caller do repo de produto. E ISSO que cada time precisa aceitar no repo dele.
-# Toda a logica vive na platform; aqui so ha o gatilho e os inputs.
+# Toda a logica vive na platform; aqui so ha o gatilho, os inputs e as permissoes.
 # Remover este arquivo desliga a pipe neste repo, sem deixar acesso pendurado.
 
 on:
@@ -18,9 +18,19 @@ on:
         required: true
         default: "1"
 
+# O caller precisa conceder o que o reusable pede - ele nunca escala sozinho.
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
 jobs:
   dev:
     uses: renanlalier/poc-agentic-platform/.github/workflows/agent-dev.yml@v1
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
     with:
       role: frontend-swe
       execution_id: ${{ github.event.client_payload.execution_id || inputs.execution_id }}
