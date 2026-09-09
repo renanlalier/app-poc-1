@@ -2,10 +2,11 @@ version: 1
 repo_role: product
 
 defaults:
-  cli: dry-run          # switch to cursor when you have CURSOR_API_KEY
+  cli: codex
+  execution_target: cloud
   models:
-    frontend-engineer: dry-run
-    qa: dry-run
+    frontend-engineer: codex-1
+    qa: codex-1
 
 roles_enabled: [frontend-engineer, qa]
 
